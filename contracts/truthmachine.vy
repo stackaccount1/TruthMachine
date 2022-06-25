@@ -1,4 +1,6 @@
 # @version >=0.2.0
+event Title:
+    value: String[100]
 
 struct Truth:
     who: address
@@ -54,21 +56,26 @@ def _tallyVotesVerifyTruth(_proposedtruthid: uint256):
     if (self.truthList[_proposedtruthid].votes > x):
         self.truthList[_proposedtruthid].truth = True
 
+
 @external
 def tallyVotesVerifyTruth(proposedtruthid: uint256):
     self._tallyVotesVerifyTruth(proposedtruthid)
 
 #check votes
+@view
 @external
 def returnvotes(proposedtruthid: uint256) -> uint256:
     return self.truthList[proposedtruthid].votes
 
 #check truth of proposal
+@view
 @external
 def viewTruth(proposedtruthid: uint256) -> bool:
     return self.truthList[proposedtruthid].truth
 
 #look at proposals title
+@view
 @external
 def viewTitle(proposedtruthid: uint256) -> String[100]:
+    log Title(self.truthList[proposedtruthid].title)
     return self.truthList[proposedtruthid].title
