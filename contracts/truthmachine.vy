@@ -1,34 +1,37 @@
-# @version >=0.2.0 <0.3.0
+# @version >=0.2.0
 
-Struct Truth:
+struct Truth:
     who: address
     url: String[100]
     title: String[100]
     truth: bool
-    number: uint256
+    votes: uint256
 
-truthid: public(uint256)
+truthList: HashMap[uint256, Truth]
 
-voters: HashMap(address, bool)
+truthCount: public(uint256)
+
+votercount: public(uint256)
+
+voters: HashMap[address, bool]
 
 admin: address
 
 @external
 def __init__():
     self.admin = msg.sender
-    
+    self.truthCount = 1
+
 @external
 @payable
-def submitTruth(url: String[100], title: String[100]):
-    assert msg.value > .02 ether, "need to pay .02 ether to deposit a truth"
-    self.Truth[truthid] = Truth({
+def submitTruth(_url: String[100], _title: String[100]):
+    newTruth: Truth = Truth({
         who: msg.sender,
-        url: url,
-        title: title,
+        url: _url,
+        title: _title,
         truth: False,
-        number: truthid,
+        votes: 0,
     })
-    truthid += 1
-
-
+    self.truthList[self.truthCount] = newTruth
+    self.truthCount += 1
 
