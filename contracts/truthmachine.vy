@@ -17,7 +17,10 @@ truthCount: public(uint256)
 voterCount: public(uint256)
 
 voterList: HashMap[uint256, address]
+voterBool: HashMap[address, bool]
 truthList: HashMap[uint256, Truth]
+
+proposalRecord: HashMap[address, HashMap[uint256, bool]]
 
 
 @external
@@ -43,12 +46,17 @@ def mintVoters(proleteriataddress: address):
     assert msg.sender == self.admin
     self.voterList[self.voterCount] = proleteriataddress
     self.voterCount += 1
+    self.voterBool[proleteriataddress] = True
 
 #true or false
 @external
 def voteTruth(proposedtruthid: uint256, torf: bool):
+    assert self.voterBool[msg.sender] == True, "not a registered voter"
+    #cant vote twice
+    assert not self.proposalRecord[msg.sender][proposedtruthid] == True
     if (torf == True):
         self.truthList[proposedtruthid].votes += 1
+    self.proposalRecord[msg.sender][proposedtruthid] = True
 
 @internal
 def _tallyVotesVerifyTruth(_proposedtruthid: uint256):
