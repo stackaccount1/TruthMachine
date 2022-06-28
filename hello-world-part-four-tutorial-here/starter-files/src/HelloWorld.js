@@ -25,6 +25,7 @@ const HelloWorld = () => {
   const [newTruthURL, setNewTruthUrl] = useState("");
   const [voter, setNewVoter] = useState("");
   const [torf, setTOrF] = useState("");
+  const [votes, setVotes] = useState("")
 
   //called only once
   useEffect(async () => {
@@ -106,8 +107,8 @@ const HelloWorld = () => {
   };
 
   const onUpdatePressedNumber6 = async () => {
-    const { status } = await returnvotes(walletAddress, voter);
-    setStatus(status);
+    const votes = await returnvotes(walletAddress, id);
+    setVotes(votes);
   };
 
   const onUpdatePressedNumber7 = async () => {
@@ -221,6 +222,7 @@ const HelloWorld = () => {
       </div>
       <div>
         <label> View Truth Votes:
+        <p>{votes}</p>
         <input
           type="text"
           placeholder="Submit A Truth ID No."

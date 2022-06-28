@@ -173,47 +173,9 @@ export const tallyVotesVerifyTruth = async (address, truthid) => {
 };
 
 export const returnvotes = async (address, truthid) => {
-
-  //input error handling
-  if (!window.ethereum || address === null) {
-    return {
-      status:
-        "💡 Connect your Metamask wallet to update the message on the blockchain.",
-    };
-  }
-
-  if (truthid.trim() === "") {
-    return {
-      status: "❌ Your message cannot be an empty string.",
-    };
-  }
-
-  //set up transaction parameters
-  const transactionParameters = {
-    to: contractAddress, // Required except during contract publications.
-    from: address, // must match user's active address.
-    data: helloWorldContract.methods.returnvotes(truthid).encodeABI(),
-  };
-
-  //sign the transaction
-  try {
-    const txHash = await window.ethereum.request({
-      method: "eth_sendTransaction",
-      params: [transactionParameters],
-    });
-    return {
-      status:"SUCCESS",
-      txHash,
-    };
-  } catch (error) {
-    return {
-      status: "😥 " + error.message,
-    };
-  }
-};
-
-//const truth = await helloWorldContract.methods.viewTruth(truthid).call();
-//    return truth;
+  const votes = await helloWorldContract.methods.returnvotes(truthid).call();
+  return votes;
+}
 
 export const viewTruth = async (address, truthid) => {
 
