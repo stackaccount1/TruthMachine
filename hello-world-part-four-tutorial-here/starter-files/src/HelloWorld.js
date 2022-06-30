@@ -87,8 +87,8 @@ const HelloWorld = () => {
   };
 
   const onUpdatePressedNumber2 = async () => {
-    const { truth } = await viewTruth(walletAddress, id);
-    setViewTruth(truth);
+    const { torf } = await viewTruth(walletAddress, id);
+    setTOrF(truth);
   };
 
   const onUpdatePressedNumber3 = async () => {
@@ -208,6 +208,7 @@ const HelloWorld = () => {
 
       <div>
         <label> View Title By ID No.
+        <p>{torf}</p>
         <input
           type="text"
           placeholder="Submit A Truth ID No."

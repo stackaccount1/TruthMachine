@@ -178,45 +178,10 @@ export const returnvotes = async (address, truthid) => {
 }
 
 export const viewTruth = async (address, truthid) => {
+  const torf = await helloWorldContract.methods.viewTruth(truthid).call();
+  return torf;
+}
 
-    //input error handling
-    if (!window.ethereum || address === null) {
-      return {
-        status:
-          "💡 Connect your Metamask wallet to update the message on the blockchain.",
-      };
-    }
-  
-    if (truthid.trim() === "") {
-      return {
-        status: "❌ Your id cannot be an empty string.",
-      };
-    }
-  
-    //set up transaction parameters
-    const transactionParameters = {
-      to: contractAddress, // Required except during contract publications.
-      from: address, // must match user's active address.
-      data: helloWorldContract.methods.viewTruth(truthid).encodeABI(),
-    };
-  
-    //sign the transaction
-    try {
-      const txHash = await window.ethereum.request({
-        method: "eth_sendTransaction",
-        params: [transactionParameters],
-      });
-      return {
-        status: "SUCCESS",
-        txHash,
-      };
-    } catch (error) {
-      return {
-        status: "😥 " + error.message,
-      };
-    }
-
-};
 
 export const viewTitle = async (address, truthid) => {
 
