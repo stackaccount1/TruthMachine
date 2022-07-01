@@ -25,7 +25,8 @@ const HelloWorld = () => {
   const [newTruthURL, setNewTruthUrl] = useState("");
   const [voter, setNewVoter] = useState("");
   const [torf, setTOrF] = useState("");
-  const [votes, setVotes] = useState("")
+  const [votes, setVotes] = useState("");
+  const [title, getTitle] = useState("");
 
   //called only once
   useEffect(async () => {
@@ -87,8 +88,8 @@ const HelloWorld = () => {
   };
 
   const onUpdatePressedNumber2 = async () => {
-    const { torf } = await viewTruth(walletAddress, id);
-    setTOrF(truth);
+    const torf = await viewTruth(walletAddress, id);
+    setTOrF(torf);
   };
 
   const onUpdatePressedNumber3 = async () => {
@@ -97,8 +98,8 @@ const HelloWorld = () => {
   };
 
   const onUpdatePressedNumber4 = async () => {
-    const { status } = await viewTitle(walletAddress, id);
-    setStatus(status);
+    const title = await viewTitle(walletAddress, id);
+    getTitle(title);
   };
 
   const onUpdatePressedNumber5 = async () => {
@@ -178,7 +179,7 @@ const HelloWorld = () => {
           type="text"
           placeholder="Enter True or False"
           onChange={(e) => setTOrF(e.target.value)}
-          value={torf}
+          value={truth}
         />
         </label>
         <br />
@@ -189,10 +190,9 @@ const HelloWorld = () => {
         </button>
       </div>
 
-      <p>{truth}</p>
-
       <div>
         <label> View Truth Boolean:
+        <p>{torf}</p>
         <input
           type="text"
           placeholder="Submit A Truth ID No."
@@ -208,7 +208,7 @@ const HelloWorld = () => {
 
       <div>
         <label> View Title By ID No.
-        <p>{torf}</p>
+        <p>{title}</p>
         <input
           type="text"
           placeholder="Submit A Truth ID No."
@@ -221,6 +221,7 @@ const HelloWorld = () => {
           Return Truth Title
         </button>
       </div>
+
       <div>
         <label> View Truth Votes:
         <p>{votes}</p>
@@ -239,6 +240,7 @@ const HelloWorld = () => {
 
       <div>
         <label> Execute Vote Tally Determine If True:
+          <p>{status}</p>
         <input
           type="text"
           placeholder="Submit A Truth ID No."
